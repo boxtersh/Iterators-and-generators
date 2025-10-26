@@ -43,3 +43,30 @@ class Iterator:
 # print(lst)
 # print(list(it))
 
+# ******************************************************************************************************************
+
+class WordsEager:
+    def __init__(self, string: str):
+        self.string = string
+        self.index = 0
+
+    def __next__(self):
+        if self.string == '' and self.string.isspace():
+            return print('в строке слов нет')
+        lst_is_string = self.string.split()
+
+        while self.index < len(lst_is_string):
+            self.index += 1
+            return lst_is_string[self.index-1]
+
+        raise StopIteration
+
+    def __iter__(self):
+        return self
+
+
+# it = WordsEager('Реализовать класс WordsEager , принимающий в конструктор строку и выдающий')
+# print(list(it))
+
+
+
