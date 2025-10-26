@@ -69,4 +69,39 @@ class WordsEager:
 # print(list(it))
 
 
+# ******************************************************************************************************************
+
+class WordsLazy:
+    def __init__(self, string: str):
+        self.string = string
+        self.begin = 0
+        self.end = 0
+
+    def __next__(self):
+        if not self.string.strip():
+            raise StopIteration
+        while self.end < len(self.string) and self.string[self.end] ==' ':
+            self.end += 1
+            self.begin = self.end
+
+        while self.end >= len(self.string):
+            raise StopIteration
+
+        while self.end < len(self.string) and self.string[self.end] != ' ':
+            self.end += 1
+
+        word = self.string[self.begin : self.end]
+        self.begin = self.end
+
+        return word
+
+    def __iter__(self):
+        return self
+
+it = WordsLazy('Реализовать класс WordsEager, принимающий в конструктор строку и выдающий')
+print(list(it))
+
+# ******************************************************************************************************************
+
+
 
