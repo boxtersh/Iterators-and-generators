@@ -1,4 +1,5 @@
 from typing import Callable, Any, Union
+from random import randint as rint
 
 
 class Iterator:
@@ -98,10 +99,32 @@ class WordsLazy:
     def __iter__(self):
         return self
 
-it = WordsLazy('Реализовать класс WordsEager, принимающий в конструктор строку и выдающий')
-print(list(it))
+# it = WordsLazy('Реализовать класс WordsEager, принимающий в конструктор строку и выдающий')
+# print(list(it))
 
 # ******************************************************************************************************************
 
+class Primes:
+    def __init__(self, n=1):
+        self.n = self.validate(n)
+        self.count = 0
 
+    def validate(self, n):
+        if not isinstance(n, int) or n < 1:
+            raise TypeError(f'Несоответствие типа данных <class int> или значения n > 1')
+        return n
+
+    def __next__(self):
+        if self.count < self.n:
+            res = rint(2 + self.count, 2 * (self.count + 1))
+            self.count += 1
+            return res
+
+        raise StopIteration
+
+    def __iter__(self):
+        return self
+
+a = Primes()
+print(list(a))
 
