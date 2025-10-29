@@ -1,7 +1,8 @@
 from typing import Callable, Any, Union
 from random import randint as rint
 
-
+# ******************************************************************************************************************
+# 1. Iterator Sorted
 class Iterator:
     def __init__(self,
                  iter_object: Union[list, tuple, ...],
@@ -45,7 +46,7 @@ class Iterator:
 # print(list(it))
 
 # ******************************************************************************************************************
-
+# 2. Iterator Words (версия A — жадная)
 class WordsEager:
     def __init__(self, string: str):
         self.string = string
@@ -71,6 +72,7 @@ class WordsEager:
 
 
 # ******************************************************************************************************************
+# 3. Iterator Words (версия B — ленивый)
 
 class WordsLazy:
     def __init__(self, string: str):
@@ -103,6 +105,7 @@ class WordsLazy:
 # print(list(it))
 
 # ******************************************************************************************************************
+# 4. Iterator Primes
 
 class Primes:
     def __init__(self, n=1):
@@ -125,6 +128,23 @@ class Primes:
     def __iter__(self):
         return self
 
-a = Primes()
-print(list(a))
+# a = Primes()
+# print(list(a))
+
+# ******************************************************************************************************************
+# 5. Generator chunked
+
+def chunked(iterable, size):
+    for i in range(0, len(iterable), size):
+        if i > len(iterable) - 1:
+            return
+        yield tuple(iterable[i:i + size])
+
+
+
+
+ch = chunked([1,2,3,4,5,6], 4)
+print(list(ch))
+
+
 
