@@ -140,11 +140,38 @@ def chunked(iterable, size):
             return
         yield tuple(iterable[i:i + size])
 
+# ch = chunked([1,2,3,4,5,6], 4)
+# print(list(ch))
+
+# ******************************************************************************************************************
+# 6. Generator words_generator
+def words_generator(text):
+    text = text.strip()
+    ind_s, ind_e = 0, 0
+    if not text:
+        return
+    while ind_e < len(text):
+        while ind_e < len(text) and text[ind_e] == ' ':
+            ind_e += 1
+        ind_s = ind_e
+        while ind_e < len(text) and text[ind_e] != ' ':
+            ind_e += 1
+
+        if ind_s < ind_e:
+            yield text[ind_s:ind_e]
 
 
 
-ch = chunked([1,2,3,4,5,6], 4)
-print(list(ch))
+
+
+
+
+text = '        5     8                         '
+print(tuple(words_generator(text)))
+
+# ******************************************************************************************************************
+# 7. Generator primes_in_range
+
 
 
 
