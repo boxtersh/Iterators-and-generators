@@ -160,17 +160,22 @@ def words_generator(text):
         if ind_s < ind_e:
             yield text[ind_s:ind_e]
 
-
-
-
-
-
-
-text = '        5     8                         '
-print(tuple(words_generator(text)))
+# text = '        5     8                         '
+# print(tuple(words_generator(text)))
 
 # ******************************************************************************************************************
 # 7. Generator primes_in_range
+
+def primes_in_range(start, stop):
+    if start >= stop or start <= 1:
+        return
+    for i in range(start, stop+1):
+        if i % 2 != 0 and i % 3 != 0 and i % 4 != 0  and i % 5 != 0\
+        and i % 6 != 0 and i % 7 != 0 and i % 8 != 0 and i % 9 != 0:
+            yield i
+
+# g = primes_in_range(13, 42)
+# print(*list(g),sep='\n')
 
 
 
