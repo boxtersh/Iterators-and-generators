@@ -1,6 +1,7 @@
 from typing import Callable, Any, Union
 from random import randint as rint
 
+
 # ******************************************************************************************************************
 # 1. Iterator Sorted
 class Iterator:
@@ -59,7 +60,7 @@ class WordsEager:
 
         while self.index < len(lst_is_string):
             self.index += 1
-            return lst_is_string[self.index-1]
+            return lst_is_string[self.index - 1]
 
         raise StopIteration
 
@@ -83,7 +84,7 @@ class WordsLazy:
     def __next__(self):
         if not self.string.strip():
             raise StopIteration
-        while self.end < len(self.string) and self.string[self.end] ==' ':
+        while self.end < len(self.string) and self.string[self.end] == ' ':
             self.end += 1
             self.begin = self.end
 
@@ -93,13 +94,14 @@ class WordsLazy:
         while self.end < len(self.string) and self.string[self.end] != ' ':
             self.end += 1
 
-        word = self.string[self.begin : self.end]
+        word = self.string[self.begin: self.end]
         self.begin = self.end
 
         return word
 
     def __iter__(self):
         return self
+
 
 # it = WordsLazy('Реализовать класс WordsEager, принимающий в конструктор строку и выдающий')
 # print(list(it))
@@ -128,6 +130,7 @@ class Primes:
     def __iter__(self):
         return self
 
+
 # a = Primes()
 # print(list(a))
 
@@ -139,6 +142,7 @@ def chunked(iterable, size):
         if i > len(iterable) - 1:
             return
         yield tuple(iterable[i:i + size])
+
 
 # ch = chunked([1,2,3,4,5,6], 4)
 # print(list(ch))
@@ -160,6 +164,7 @@ def words_generator(text):
         if ind_s < ind_e:
             yield text[ind_s:ind_e]
 
+
 # text = '        5     8                         '
 # print(tuple(words_generator(text)))
 
@@ -169,14 +174,23 @@ def words_generator(text):
 def primes_in_range(start, stop):
     if start >= stop or start <= 1:
         return
-    for i in range(start, stop+1):
-        if i % 2 != 0 and i % 3 != 0 and i % 4 != 0  and i % 5 != 0\
-        and i % 6 != 0 and i % 7 != 0 and i % 8 != 0 and i % 9 != 0:
-            yield i
 
-# g = primes_in_range(13, 42)
-# print(*list(g),sep='\n')
+    divisible = start
+    if start == 2:
+        divisible = 3
+    div = 2
+
+    while divisible <= stop:
+        while div < divisible:
+            if divisible % div == 0:
+                break
+            div += 1
+
+        else:
+            yield divisible
+        div = 2
+        divisible += 1
 
 
-
-
+g = primes_in_range(2, 4919)
+print(*list(g), sep='\n')
