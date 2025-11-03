@@ -175,22 +175,18 @@ def primes_in_range(start, stop):
     if start >= stop or start <= 1:
         return
 
-    divisible = start
     if start == 2:
-        divisible = 3
-    div = 2
+        yield start
 
-    while divisible <= stop:
-        while div < divisible:
-            if divisible % div == 0:
+    start = start + 1 if start % 2 == 0 else start
+
+    for current in range(start, stop + 1, 2):
+        for dev in range(3, int(current ** 0.5), 2):
+            if current % dev == 0:
                 break
-            div += 1
-
         else:
-            yield divisible
-        div = 2
-        divisible += 1
+            yield current
 
 
-g = primes_in_range(2, 4919)
-print(*list(g), sep='\n')
+# generator = primes_in_range(2, 30)
+# print(*list(generator), sep='\n')
