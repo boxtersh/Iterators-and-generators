@@ -113,27 +113,42 @@ class Primes:
     def __init__(self, n=1):
         self.n = self.validate(n)
         self.count = 0
+        self.prime = 1
+        self.flag = False
 
     def validate(self, n):
         if not isinstance(n, int) or n < 1:
-            raise TypeError(f'Несоответствие типа данных <class int> или значения n > 1')
+            raise StopIteration
         return n
 
     def __next__(self):
-        if self.count < self.n:
-            res = rint(2 + self.count, 2 * (self.count + 1))
-            self.count += 1
-            return res
+        if self.count >= self.n:
+            raise StopIteration
 
-        raise StopIteration
+        if self.n != 1:
+            if self.flag:
+                while True:
+                    self.prime += 2
+                    for dev in range(3, int(self.prime ** 0.5) + 1, 2):
+                        if self.prime % dev == 0:
+                            break
+                    else:
+                        self.count += 1
+                        return self.prime
+
+            self.flag = True
+            self.count += 1
+            return 2
+
+        self.count += 1
+        return 2
 
     def __iter__(self):
         return self
 
 
-# a = Primes()
-# print(list(a))
-
+# a = Primes(3)
+# print(set(a))
 # ******************************************************************************************************************
 # 5. Generator chunked
 
@@ -144,7 +159,7 @@ def chunked(iterable, size):
         yield tuple(iterable[i:i + size])
 
 
-# ch = chunked([1,2,3,4,5,6], 4)
+# ch = chunked('jhvvlulkibghigiyfygvvuvyuyuly', 4)
 # print(list(ch))
 
 # ******************************************************************************************************************
@@ -165,8 +180,8 @@ def words_generator(text):
     yield text[ind_start:]
 
 
-text = '        513     8           13             913 '
-print(tuple(words_generator(text)))
+# text = '        513     8           13             913 '
+# print(tuple(words_generator(text)))
 
 # ******************************************************************************************************************
 # 7. Generator primes_in_range
@@ -180,13 +195,12 @@ def primes_in_range(start, stop):
 
     start = start + 1 if start % 2 == 0 else start
 
-    for current in range(start, stop + 1, 2):
-        for dev in range(3, int(current ** 0.5), 2):
-            if current % dev == 0:
+    for prime in range(start, stop + 1, 2):
+        for dev in range(3, int(prime ** 0.5), 2):
+            if prime % dev == 0:
                 break
         else:
-            yield current
-
+            yield prime
 
 # generator = primes_in_range(2, 30)
 # print(*list(generator), sep='\n')
