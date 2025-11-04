@@ -55,7 +55,7 @@ class WordsEager:
 
     def __next__(self):
         if self.string == '' and self.string.isspace():
-            return print('в строке слов нет')
+            return
         lst_is_string = self.string.split()
 
         while self.index < len(lst_is_string):
