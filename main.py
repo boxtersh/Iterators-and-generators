@@ -4,41 +4,38 @@ from random import randint as rint
 
 # ******************************************************************************************************************
 # 1. Iterator Sorted
-class Iterator:
-    def __init__(self,
-                 iter_object: Union[list, tuple, ...],
-                 key: Callable = None,
-                 reverse: bool = False):
+from typing import Union, Callable, Any
 
-        self.iter_object = list(iter_object)
+class Sorted:
+    def __init__(self,
+                 iter_object,
+                 key = lambda x: x,
+                 reverse = False):
+        self.data = list(iter_object)
         self.key = key
         self.reverse = reverse
-        self.index = 0
+        self.ind = 0
+        self.sorted_data = self._bubble_sort(self.data, self.key, self.reverse)
+
+    def _bubble_sort(self, lst, key, reverse) -> list:
+        n = len(lst)
+        for i in range(n):
+            for j in range(0, n-i-1):
+                if (key(lst[j]) > key(lst[j+1])) and not reverse or \
+                    (key(lst[j]) < key(lst[j+1])) and reverse:
+                    lst[j], lst[j+1] = lst[j+1], lst[j]
+        return lst
 
     def __next__(self):
-        if self.index >= len(self.iter_object):
+        if self.ind >= len(self.sorted_data):
             raise StopIteration
-
-        start_elm = self.iter_object[self.index]
-        start_idx = self.index
-
-        for i in range(self.index + 1, len(self.iter_object)):
-            val1 = self.key(self.iter_object[i]) if self.key else self.iter_object[i]
-            val2 = self.key(start_elm) if self.key else start_elm
-
-            if (self.reverse and val1 > val2) or (not self.reverse and val1 < val2):
-                start_elm = self.iter_object[i]
-                start_idx = i
-
-        self.iter_object[self.index], self.iter_object[start_idx] = self.iter_object[start_idx], self.iter_object[
-            self.index]
-
-        self.index += 1
-
-        return start_elm
+        result = self.sorted_data[self.ind]
+        self.ind += 1
+        return result
 
     def __iter__(self):
         return self
+
 
 
 # lst = 'add', 'fdrfg', '2', 'rr', 'ertewr', '9'
